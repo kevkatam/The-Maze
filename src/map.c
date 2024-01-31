@@ -50,7 +50,7 @@ void setmap(int w, int h, int value)
  * makemap - makes map from given file
  * @argv: command line argument array
  * Return: nothing
- */
+ *
 void makemap(char **argv)
 {
 	int i, j;
@@ -64,4 +64,4 @@ void makemap(char **argv)
 			map[i][j] = filemap[i][j];
 	}
 	free_map(filemap);
-}
+}*/
