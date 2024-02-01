@@ -10,10 +10,12 @@
 #include <stdlib.h>
 #include <stddef.h>
 #include <SDL2/SDL.h>
-#include <stddef.h>
+#include <SDL2/SDL_image.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <fcntl.h>
+
 
 /**
 * struct SDL_Instance - structure for an instance of SDL
@@ -32,6 +34,12 @@ int init_window(SDL_t *init);
 int getmap(int w, int h, int mt);
 void setmap(int w, int h, int value);
 void makemap(char **argv);
+void freetoks(char **toks);
+void freecols(char ***cols);
+void freemap(int **map);
+int **getaltitude(char **argv);
+char **strsplit(char *str, char *d);
+
 
 
 

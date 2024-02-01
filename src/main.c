@@ -12,11 +12,11 @@ int main(int argc, char **argv)
 	if (init_window(&init) != 0)
 		return (1);
 
-	/*if (argc > 1)
-		makemap(argv);*/
+	if (argc > 1)
+		makemap(argv);
 	while (1)
 	{
-		SDL_SetRenderDrawColor(init.rend, 128, 122, 128, 0);
+		SDL_SetRenderDrawColor(init.rend, 128, 128, 128, 0);
 		SDL_RenderClear(init.rend);
 
 		SDL_RenderPresent(init.rend);

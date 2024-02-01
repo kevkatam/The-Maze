@@ -29,4 +29,5 @@ int init_window(SDL_t *init)
 		SDL_Quit();
 		return (1);
 	}
+	return (0);
 }
