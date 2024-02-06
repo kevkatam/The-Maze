@@ -26,3 +26,12 @@ int main(int argc, char **argv)
 	SDL_Quit();
 	return (0);
 }
+/**
+ * present - presents the game
+ * @init: sdl2 instance
+ * Return: no return
+ */
+void present(SDL_t init)
+{
+	drawmap(init);
+}
