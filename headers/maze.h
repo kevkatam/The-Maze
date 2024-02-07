@@ -9,6 +9,8 @@
 #define SCALE 0.5
 #define PI1 (0.5 * M_PI)
 #define PI2 (1.5 * M_PI)
+#define RAD 0.0174533
+#define numrays 60
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -54,6 +56,7 @@ extern gamer_t gamer;
 
 
 int init_window(SDL_t *init);
+float fix_angle(float angle);
 int getmap(int w, int h, int mt);
 void setmap(int w, int h, int value);
 void makemap(char **argv);
@@ -64,11 +67,15 @@ int **getaltitude(char **argv);
 char **strsplit(char *str, char *d);
 void present(SDL_t init);
 void drawmap(SDL_t init);
+void drawfloor(SDL_t init,float li_of, int indx, float li, float ra);
+void draw_sc(SDL_t init, int rn, float wh, float ra, float sh, float rx,
+		                float ry, int mtxr);
 int hitwall(float r_x, float r_y);
 float find_d(float ix, float iy, float jx, float jy);
 void vertical_clash(float ra, float *v_d, float *v_x, float *v_y, int *v_mtx);
 void horizontal_clash(float ra, float *h_d, float *h_x, float *h_y,
 		int *h_mtx);
+void raycast(SDL_t init);
 
 
 

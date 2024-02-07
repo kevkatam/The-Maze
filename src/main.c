@@ -33,5 +33,6 @@ int main(int argc, char **argv)
  */
 void present(SDL_t init)
 {
+	raycast(init);
 	drawmap(init);
 }

@@ -135,7 +135,7 @@ void vertical_clash(float ra, float *v_d, float *v_x, float *v_y, int *v_mtx)
 	*v_d = find_d(gamer.x, gamer.y, rx, ry);
 }
 gamer_t gamer;
-float buf[num];
+float buf[numrays];
 /**
  * raycast - function that casts a ray to a wall
  * @init: sdl2 instance
@@ -149,4 +149,32 @@ void raycast(SDL_t init)
 	SDL_Rect top, map;
 
 	top.x = 0, top.y = 0, top.w = ScreenWidth, top.h = 400;
-	map.x = 0, map.y = 0, map.w = (map_w * (ma
+	map.x = 0, map.y = 0, map.w = (map_w * (map_size * SCALE));
+	map.h = (map_h * (map_size * SCALE));
+	SDL_SetRenderDrawColor(init.rend, 0, 0, 255, 0);
+	SDL_RenderFillRect(init.rend, &top);
+
+	SDL_SetRenderDrawColor(init.rend, 120, 120, 120, 0);
+	SDL_RenderFillRect(init.rend, &map);
+
+	ra = gamer.a - RAD * 30, ra = fix_angle(ra);
+	for (i = 0; i < numrays; i++)
+	{
+		horizontal_clash(ra, &hd, &hx, &hy, &htx);
+		vertical_clash(ra, &vd, &vx, &vy, &vtx);
+
+		if (hd < vd)
+			r_x = hx, r_y = hy, dis = hd, sh = 1, buf[i] = hd;
+		else
+		{
+			r_x = vx, r_y = vy, dis = vd, sh = 0.5, buf[i] = vd;
+			htx = vtx;
+		}
+		SDL_SetRenderDrawColor(init.rend, 255, 253, 208, 255);
+		px = gamer.x * SCALE, py = gamer.y * SCALE;
+		rx = r_x * SCALE, ry = r_y * SCALE;
+		SDL_RenderDrawLine(init.rend, px, py, rx, ry);
+		draw_sc(init, i, dis, ra, sh, r_x, r_y, htx);
+		ra += RAD, ra = fix_angle(ra);
+	}
+}

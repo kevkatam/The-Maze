@@ -29,5 +29,23 @@ int init_window(SDL_t *init)
 		SDL_Quit();
 		return (1);
 	}
+	if (IMG_Init(IMG_INIT_PNG) != IMG_INIT_PNG)
+	{
+		fprintf(stderr, "Failed to initialize SDL_image.\n");
+		return (1);
+	}
 	return (0);
+}
+/**
+ * fix_angle - resets angle if above range
+ * @angle: angle given
+ * Return: angle reset
+ */
+float fix_angle(float angle)
+{
+	if (angle > 2 * M_PI)
+		angle -= 2 * M_PI;
+	if (angle < 0)
+		angle += 2 * M_PI;
+	return (angle);
 }
