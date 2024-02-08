@@ -15,10 +15,10 @@ void drawmap(SDL_t init)
 		{
 			if (getmap(j, i, 0) > 0)
 				SDL_SetRenderDrawColor(init.rend,
-						139, 69, 19, 255);
+						28, 28, 28, 0);
 			else
 				SDL_SetRenderDrawColor(init.rend,
-						64, 64, 64, 255);
+						255, 255, 255, 0);
 			rec.x = (j * map_size * SCALE) + 1;
 			rec.y = (i * map_size * SCALE) + 1;
 			rec.w = (map_size * SCALE) - 1;
@@ -43,8 +43,7 @@ void draw_sc(SDL_t init, int rn, float wh, float ra, float sh, float rx,
 		float ry, int mtxr)
 {
 	float li, a = fix_angle(gamer.a - ra), of, tx_y = 0, tx_x, tx_s, c;
-
-	int i, j, s = (int) ScreenWidth / 60, /**idx;*/
+	int i, j, s = (int) ScreenWidth / 60; /**idx;*/
 
 	wh = wh * cos(a), li = (map_size * 420) / wh, tx_s = 32.0 / (float)li;
 	of = 280 - (li / 2);
@@ -109,7 +108,7 @@ void drawfloor(SDL_t init,float li_of, int indx, float li, float ra)
 		 */
 		c = 255;
 
-		SDL_SetRenderDrawColor(init.rend, c / 1.3, c / 1.3, c, 0);
+		SDL_SetRenderDrawColor(init.rend, c / 1.5, c / 1.5, c, 0);
 		for (j = indx * s; j < (indx * s) + s; j++)
 			SDL_RenderDrawPoint(init.rend, j, i);
 	}

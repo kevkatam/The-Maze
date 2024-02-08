@@ -11,6 +11,7 @@ int main(int argc, char **argv)
 
 	if (init_window(&init) != 0)
 		return (1);
+	launch();
 
 	if (argc > 1)
 		makemap(argv);
@@ -19,7 +20,12 @@ int main(int argc, char **argv)
 		SDL_SetRenderDrawColor(init.rend, 128, 128, 128, 0);
 		SDL_RenderClear(init.rend);
 
+		if (control_events(init) == 1)
+			break;
+
+		present(init);
 		SDL_RenderPresent(init.rend);
+
 	}
 	SDL_DestroyRenderer(init.rend);
 	SDL_DestroyWindow(init.wind);
@@ -35,4 +41,18 @@ void present(SDL_t init)
 {
 	raycast(init);
 	drawmap(init);
+}
+/**
+ * launch - function to launch the game
+ * Return: no return
+ */
+void launch(void)
+{
+	gamer.x = 150;
+	gamer.y = 400;
+	gamer.w = 12;
+	gamer.h = 12;
+	gamer.a = PI2;
+	gamer.dx = cos(gamer.a) * 5;
+	gamer.dy = sin(gamer.a) * 5;
 }

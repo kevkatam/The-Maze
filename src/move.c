@@ -1,0 +1,131 @@
+#include "../headers/maze.h"
+keys_t key;
+gamer_t gamer;
+/**
+ * keyup - function that handles key up event
+ * @evn: given event
+ * Return: no return
+ */
+void keyup(SDL_Event evn)
+{
+	if (evn.key.keysym.sym == SDLK_LEFT || evn.key.keysym.sym == SDLK_a)
+		key.a = 0;
+	if (evn.key.keysym.sym == SDLK_RIGHT || evn.key.keysym.sym == SDLK_d)
+		key.d = 0;
+	if (evn.key.keysym.sym == SDLK_UP || evn.key.keysym.sym == SDLK_w)
+		key.w = 0;
+	if (evn.key.keysym.sym == SDLK_DOWN || evn.key.keysym.sym == SDLK_s)
+		key.s = 0;
+	if (evn.key.keysym.sym == SDLK_e)
+		key.e = 0;
+	if (evn.key.keysym.sym == SDLK_ESCAPE)
+		key.x = 0;
+}
+/**
+ * keydown - function that handles the key down event
+ * evn: given event
+ * Return: no return
+ */
+void keydown(SDL_Event evn)
+{
+	if (evn.key.keysym.sym == SDLK_UP || evn.key.keysym.sym == SDLK_w)
+		key.w = 1;
+	if (evn.key.keysym.sym == SDLK_LEFT || evn.key.keysym.sym == SDLK_a)
+		key.a = 1;
+	if (evn.key.keysym.sym == SDLK_DOWN || evn.key.keysym.sym == SDLK_s)
+		key.s = 1;
+	if (evn.key.keysym.sym == SDLK_RIGHT || evn.key.keysym.sym == SDLK_d)
+		key.d = 1;
+	if (evn.key.keysym.sym == SDLK_e)
+		key.e = 1;
+	if (evn.key.keysym.sym == SDLK_ESCAPE)
+		key.x = 1;
+}
+/**
+ * control_door - function that controls the door activity
+ * Return: no return
+ */
+void control_door(void)
+{
+	int px_of, py_of, x, y;
+
+	x = (gamer.dx < 0) ? -30 : 30;
+	y = (gamer.dy < 0) ? -50 : 50;
+	px_of = (gamer.x + x) / map_size;
+	py_of = (gamer.y + y) / map_size;
+
+	if (getmap(px_of, py_of, 0) == 4)
+		setmap(px_of, py_of, 0);
+}
+/**
+ * control_key_down - function that controls when key is pressed down
+ * @init: SDL2 instance
+ * Return: no return
+ */
+void control_keydown(SDL_t init)
+{
+	int ix, iy, gx = gamer.x / map_size, gy = gamer.y / map_size, x = 0,
+	    y = 0;
+
+	x = (gamer.dx < 0) ? -20 : 20, y = (gamer.dy < 0) ? -20 : 20;
+	if (key.a == 1)
+	{
+		gamer.a -= 0.1, gamer.a = fix_angle(gamer.a);
+		gamer.dx = cos(gamer.a) * 5, gamer.dy = sin(gamer.a) * 5;
+	}
+	else if (key.d == 1)
+	{
+		gamer.a += 0.1, gamer.a = fix_angle(gamer.a);
+		gamer.dx = cos(gamer.a) * 5, gamer.dy = sin(gamer.a) * 5;
+	}
+	else if (key.w == 1)
+	{
+		ix = ((gamer.dx * 5) + gamer.x + x) / map_size;
+		iy = ((gamer.dy * 5) + gamer.y + y) / map_size;
+		if (getmap(ix, gy, 0) == 0)
+			gamer.x += gamer.dx * 2;
+		if (getmap(gx, iy, 0) == 0)
+			gamer.y += gamer.dy * 2;
+	}
+	else if (key.s == 1)
+	{
+		ix = ((gamer.x - (gamer.dx * 5)) - x) / map_size;
+		iy = ((gamer.y - (gamer.dy * 5)) - y) / map_size;
+		if (getmap(ix, gy, 0) == 0)
+			gamer.x -= gamer.dx * 2;
+		if (getmap(gx, iy, 0) == 0)
+			gamer.y -= gamer.dy * 2;
+	}
+	else if (key.e == 1)
+		control_door();
+	SDL_SetRenderDrawColor(init.rend, 76, 76, 76, 0);
+	SDL_RenderClear(init.rend);
+	present(init);
+	SDL_RenderPresent(init.rend);
+}
+
+/**
+ * control_events - function that controls the events
+ * @init: SDL instance
+ * Return: 0 on success 1 otherwise
+ */
+int control_events(SDL_t init)
+{
+	SDL_Event evn;
+
+	while (SDL_PollEvent(&evn))
+	{
+		if (evn.type == SDL_QUIT)
+			return (1);
+		else if (evn.type == SDL_KEYDOWN)
+		{
+			keydown(evn);
+			if (key.x == 1)
+				return (1);
+		}
+		else if (evn.type == SDL_KEYUP)
+			keyup(evn);
+		control_keydown(init);
+	}
+	return (0);
+}
