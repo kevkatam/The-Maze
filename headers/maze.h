@@ -6,7 +6,7 @@
 #define map_w 10
 #define map_h 10
 #define map_size 100
-#define SCALE 0.5
+#define SCALE 0.15
 #define PI1 (0.5 * M_PI)
 #define PI2 (1.5 * M_PI)
 #define RAD 0.0174533
@@ -22,6 +22,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <math.h>
+#include <time.h>
 
 
 /**
@@ -53,10 +54,26 @@ typedef struct gamer
 } gamer_t;
 
 extern gamer_t gamer;
+/**
+ * struct event_keys - structure for event keys
+ * @w: up key
+ * @a: down key
+ * @d: right key
+ * @a: left key
+ * @e: open door
+ * @x: exit
+ * @s: down key
+ * Description: structure to handle movements and camera rotation
+ */
+typedef struct event_keys
+{
+	int w, a, d, s, e, x;
+} keys_t;
 
 
 int init_window(SDL_t *init);
 float fix_angle(float angle);
+void launch(void);
 int getmap(int w, int h, int mt);
 void setmap(int w, int h, int value);
 void makemap(char **argv);
@@ -76,6 +93,11 @@ void vertical_clash(float ra, float *v_d, float *v_x, float *v_y, int *v_mtx);
 void horizontal_clash(float ra, float *h_d, float *h_x, float *h_y,
 		int *h_mtx);
 void raycast(SDL_t init);
+void keyup(SDL_Event evn);
+void keydown(SDL_Event evn);
+void control_door(void);
+void control_keydown(SDL_t init);
+int control_events(SDL_t init);
 
 
 
