@@ -93,7 +93,7 @@ void draw_sc(SDL_t init, int rn, float wh, float ra, float sh, float rx,
  */
 void drawfloor(SDL_t init,float li_of, int indx, float li, float ra)
 {
-	int i, j, s = (int) ScreenWidth / 60, idx;
+	int i, j, s = (int) ScreenWidth / 75, idx;
 	float dy, fx, pa = gamer.a, tx_x, tx_y, c;
 
 	for (i = li_of + li; i < ScreenHeight; i++)

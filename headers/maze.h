@@ -1,8 +1,8 @@
 #ifndef MAZE_H
 #define MAZE_H
 
-#define ScreenWidth 640
-#define ScreenHeight 480
+#define ScreenWidth 1366 
+#define ScreenHeight 768 
 #define map_w 10
 #define map_h 10
 #define map_size 100
@@ -87,6 +87,7 @@ void drawmap(SDL_t init);
 void drawfloor(SDL_t init,float li_of, int indx, float li, float ra);
 void draw_sc(SDL_t init, int rn, float wh, float ra, float sh, float rx,
 		                float ry, int mtxr);
+void drawceiling(SDL_t init, float li_of, int indx, float li, float ra);
 int hitwall(float r_x, float r_y);
 float find_d(float ix, float iy, float jx, float jy);
 void vertical_clash(float ra, float *v_d, float *v_x, float *v_y, int *v_mtx);

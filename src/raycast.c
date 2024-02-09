@@ -11,7 +11,7 @@ int hitwall(float r_x, float r_y)
 
 	if (r_x < 0 || r_x >= map_w * map_size || r_y < 0 ||
 			r_y >= map_h * map_size)
-		return (-1);
+		return (1);
 	mx = floor(r_x / map_size);
 	my = floor(r_y / map_size);
 	mp = my * map_w + mx;
@@ -59,7 +59,7 @@ void horizontal_clash(float ra, float *h_d, float *h_x, float *h_y,
 	{
 		ry = (((int)gamer.y >> 6) << 6) - 0.0001;
 		rx = ((gamer.y - ry) * tann) + gamer.x;
-		yo = -64, xo = -yo * tann;
+		yo = -100, xo = -yo * tann;
 	}
 	else if (ra < M_PI && ra > 0)
 	{
@@ -106,7 +106,7 @@ void vertical_clash(float ra, float *v_d, float *v_x, float *v_y, int *v_mtx)
 	{
 		rx = (((int)gamer.x >> 6) << 6) - 0.0001;
 		ry = ((gamer.x - rx) * tann) + gamer.y;
-		xo = -64, yo = -xo * tann;
+		xo = -100, yo = -xo * tann;
 	}
 	else if ((ra < PI1 || ra > PI2) && ra)
 	{
