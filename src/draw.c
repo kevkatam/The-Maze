@@ -45,10 +45,10 @@ void draw_sc(SDL_t init, int rn, float wh, float ra, float sh, float rx,
 	float li, a = fix_angle(gamer.a - ra), of, tx_y = 0, tx_x, tx_s, c;
 	int i, j, s = (int) ScreenWidth / 60; /**idx;*/
 
-	wh = wh * cos(a), li = (map_size * 420) / wh, tx_s = 32.0 / (float)li;
+	wh = wh * cos(a), li = (map_size * 670) / wh, tx_s = 32.0 / (float)li;
 	of = 280 - (li / 2);
-	if (li > 420)
-		li = 420, tx_y = (li - 420) / 2.0;
+	if (li > 670)
+		li = 670, tx_y = (li - 670) / 2.0;
 	tx_y = (tx_y * tx_s) + (mtxr * 32);
 	if (sh == 1)
 	{
@@ -70,13 +70,13 @@ void draw_sc(SDL_t init, int rn, float wh, float ra, float sh, float rx,
 		    *c = (get_tx(idx) * 255) * sh;
 		    */
 		if (mtxr == 0)
-			SDL_SetRenderDrawColor(init.rend, c / 2.0, c / 2.0, c, 0);
+			SDL_SetRenderDrawColor(init.rend, c / 2.0, c / 2.0, c, 255);
 		else if (mtxr == 1)
-			SDL_SetRenderDrawColor(init.rend, c / 2.0, c, c, 0);
+			SDL_SetRenderDrawColor(init.rend, c / 2.0, c, c, 255);
 		else if (mtxr == 2)
-			SDL_SetRenderDrawColor(init.rend, c, c / 2.0, c / 2.0, 0);
+			SDL_SetRenderDrawColor(init.rend, c, c / 2.0, c / 2.0, 255);
 		else if (mtxr == 3)
-			SDL_SetRenderDrawColor(init.rend, c / 2.0, c, c / 2.0, 0);
+			SDL_SetRenderDrawColor(init.rend, c / 2.0, c, c / 2.0, 255);
 		for (j = rn * s; j < (rn * s) + s; j++)
 			SDL_RenderDrawPoint(init.rend, j, i + of);
 	}
@@ -108,8 +108,31 @@ void drawfloor(SDL_t init,float li_of, int indx, float li, float ra)
 		 */
 		c = 255;
 
-		SDL_SetRenderDrawColor(init.rend, c / 1.5, c / 1.5, c, 0);
+		SDL_SetRenderDrawColor(init.rend, 0, 0, c / 5.1, 0);
 		for (j = indx * s; j < (indx * s) + s; j++)
 			SDL_RenderDrawPoint(init.rend, j, i);
+	}
+}
+/**
+ * drawceiling - function that draws the ceiling of the maze
+ * @init: sdl instance
+ * @li_of: line offset
+ * @indx: index of each ray
+ * @li: vertical line
+ * @ra: angle of ray
+ * Return: no return
+ */
+void drawceiling(SDL_t init, float li_of, int indx, float li, float ra)
+{
+	int i, j;
+	float dy, fx, ga = gamer.a;
+
+	for (i = li_of + li; i < 500; i++)
+	{
+		dy = i - (500 / 2.0);
+		fx = cos(fix_angle(ga - ra));
+		SDL_SetRenderDrawColor(init.rend, 135, 206, 235, 255);
+		for (j = indx * 10; j < (indx * 10) + 10; j++)
+			SDL_RenderDrawPoint(init.rend, j + 530, 500 - i);
 	}
 }

@@ -17,7 +17,7 @@ int main(int argc, char **argv)
 		makemap(argv);
 	while (1)
 	{
-		SDL_SetRenderDrawColor(init.rend, 128, 128, 128, 0);
+		SDL_SetRenderDrawColor(init.rend, 255, 255, 255, 0);
 		SDL_RenderClear(init.rend);
 
 		if (control_events(init) == 1)
@@ -51,7 +51,7 @@ void launch(void)
 	gamer.x = 150;
 	gamer.y = 400;
 	gamer.w = 12;
-	gamer.h = 12;
+	gamer.h = 15;
 	gamer.a = PI2;
 	gamer.dx = cos(gamer.a) * 5;
 	gamer.dy = sin(gamer.a) * 5;

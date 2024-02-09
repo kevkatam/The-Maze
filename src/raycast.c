@@ -63,18 +63,18 @@ void horizontal_clash(float ra, float *h_d, float *h_x, float *h_y,
 	}
 	else if (ra < M_PI && ra > 0)
 	{
-		ry = (((int)gamer.y >> 6) << 6) + 64;
+		ry = (((int)gamer.y >> 6) << 6) + 100;
 		rx = ((gamer.y - ry) * tann) + gamer.x;
-		yo = 64, xo = -yo * tann;
+		yo = 100, xo = -yo * tann;
 	}
 	else if (ra == 0 || ra == M_PI)
-		rx = gamer.x, ry = gamer.y, dif = 8;
-	while (dif < 8)
+		rx = gamer.x, ry = gamer.y, dif = 10;
+	while (dif < 10)
 	{
 		val = hitwall(rx, ry);
 		if (val != 0)
 		{
-			dif = 8;
+			dif = 10;
 			if (val > 0)
 				*h_mtx = val - 1;
 		}
@@ -110,20 +110,20 @@ void vertical_clash(float ra, float *v_d, float *v_x, float *v_y, int *v_mtx)
 	}
 	else if ((ra < PI1 || ra > PI2) && ra)
 	{
-		rx = (((int)gamer.x >> 6) << 6) + 64;
+		rx = (((int)gamer.x >> 6) << 6) + 100;
 		ry = ((gamer.x - rx) * tann) + gamer.y;
-		xo = 64, yo = -xo * tann;
+		xo = 100, yo = -xo * tann;
 	}
 	else if (ra == 0 || ra == M_PI)
 	{
-		rx = gamer.x, ry = gamer.y, dif = 8;
+		rx = gamer.x, ry = gamer.y, dif = 10;
 	}
-	while (dif < 8)
+	while (dif < 10)
 	{
 		val = hitwall(rx, ry);
 		if (val != 0)
 		{
-			dif = 8;
+			dif = 10;
 			if (val > 0)
 				*v_mtx = val - 1;
 		}
@@ -151,7 +151,7 @@ void raycast(SDL_t init)
 	top.x = 0, top.y = 0, top.w = ScreenWidth, top.h = 400;
 	map.x = 0, map.y = 0, map.w = (map_w * (map_size * SCALE));
 	map.h = (map_h * (map_size * SCALE));
-	SDL_SetRenderDrawColor(init.rend, 0, 0, 255, 0);
+	SDL_SetRenderDrawColor(init.rend, 135, 206, 235, 255);
 	SDL_RenderFillRect(init.rend, &top);
 
 	SDL_SetRenderDrawColor(init.rend, 120, 120, 120, 0);
@@ -170,7 +170,7 @@ void raycast(SDL_t init)
 			r_x = vx, r_y = vy, dis = vd, sh = 0.5, buf[i] = vd;
 			htx = vtx;
 		}
-		SDL_SetRenderDrawColor(init.rend, 255, 253, 208, 255);
+		SDL_SetRenderDrawColor(init.rend, 0, 0, 0, 255);
 		px = gamer.x * SCALE, py = gamer.y * SCALE;
 		rx = r_x * SCALE, ry = r_y * SCALE;
 		SDL_RenderDrawLine(init.rend, px, py, rx, ry);
