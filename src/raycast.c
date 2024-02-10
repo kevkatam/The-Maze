@@ -148,7 +148,7 @@ void raycast(SDL_t init)
 	int i, vtx = 0, htx = 0;
 	SDL_Rect top, map;
 
-	top.x = 0, top.y = 0, top.w = ScreenWidth, top.h = 400;
+	top.x = 0, top.y = 0, top.w = ScreenWidth, top.h = 300;
 	map.x = 0, map.y = 0, map.w = (map_w * (map_size * SCALE));
 	map.h = (map_h * (map_size * SCALE));
 	SDL_SetRenderDrawColor(init.rend, 135, 206, 235, 255);

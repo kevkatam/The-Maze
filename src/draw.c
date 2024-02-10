@@ -43,7 +43,7 @@ void draw_sc(SDL_t init, int rn, float wh, float ra, float sh, float rx,
 		float ry, int mtxr)
 {
 	float li, a = fix_angle(gamer.a - ra), of, tx_y = 0, tx_x, tx_s, c;
-	int i, j, s = (int) ScreenWidth / 60; /**idx;*/
+	int i, j, s = (int) ScreenWidth / 75, idx;
 
 	wh = wh * cos(a), li = (map_size * 670) / wh, tx_s = 32.0 / (float)li;
 	of = 280 - (li / 2);
@@ -65,10 +65,8 @@ void draw_sc(SDL_t init, int rn, float wh, float ra, float sh, float rx,
 
 	for (i = 0; i < li; i++)
 	{
-		/**idx = (int)(tx_y) * 32 + (int)tx_x,*/ c = 255; 
-		   /** 
-		    *c = (get_tx(idx) * 255) * sh;
-		    */
+		idx = (int)(tx_y) * 32 + (int)tx_x;
+		c = (gettexture(idx) * 255) *sh; 
 		if (mtxr == 0)
 			SDL_SetRenderDrawColor(init.rend, c / 2.0, c / 2.0, c, 255);
 		else if (mtxr == 1)
@@ -79,6 +77,7 @@ void draw_sc(SDL_t init, int rn, float wh, float ra, float sh, float rx,
 			SDL_SetRenderDrawColor(init.rend, c / 2.0, c, c / 2.0, 255);
 		for (j = rn * s; j < (rn * s) + s; j++)
 			SDL_RenderDrawPoint(init.rend, j, i + of);
+		tx_y += tx_s;
 	}
 	drawfloor(init, of, rn, li, ra);
 }
@@ -102,13 +101,10 @@ void drawfloor(SDL_t init,float li_of, int indx, float li, float ra)
 		tx_x = gamer.x / 2.0 + cos(ra) * 158 * 32 / dy / fx;
 		tx_y = gamer.y / 2.0 - sin(ra) * 158 * 32 / dy / fx;
 
-		/**idx = ((int)(tx_y) & 31) * 32 + ((int)(tx_x) & 31);*/
-		/**
-		 *c = (get_tx(idx) * 255) * 0.7;
-		 */
-		c = 255;
+		idx = ((int)(tx_y) & 31) * 32 + ((int)(tx_x) & 31);
+		c = (gettexture(idx) * 255) * 0.7;
 
-		SDL_SetRenderDrawColor(init.rend, 0, 0, c / 5.1, 0);
+		SDL_SetRenderDrawColor(init.rend, c / 1.5, c / 1.5, c / 1.5, 0);
 		for (j = indx * s; j < (indx * s) + s; j++)
 			SDL_RenderDrawPoint(init.rend, j, i);
 	}
@@ -125,14 +121,42 @@ void drawfloor(SDL_t init,float li_of, int indx, float li, float ra)
 void drawceiling(SDL_t init, float li_of, int indx, float li, float ra)
 {
 	int i, j;
-	float dy, fx, ga = gamer.a;
+	float dy, fx, ga = gamer.a, tx_x, tx_y, c, idx;
 
 	for (i = li_of + li; i < 500; i++)
 	{
 		dy = i - (500 / 2.0);
 		fx = cos(fix_angle(ga - ra));
-		SDL_SetRenderDrawColor(init.rend, 135, 206, 235, 255);
+		tx_x = gamer.x / 2.0 + cos(ra) * 158 * 32 / dy / fx;
+		tx_y = gamer.y / 2.0 - sin(ra) * 158 * 32 / dy / fx;
+		idx = ((int)(tx_y) & 31) * 32 + ((int)(tx_x) & 31);
+		c = (gettexture(idx) * 255) * 0.7;
+		SDL_SetRenderDrawColor(init.rend, c / 2.0, c / 1.2, c / 2.0, 0);
 		for (j = indx * 10; j < (indx * 10) + 10; j++)
 			SDL_RenderDrawPoint(init.rend, j + 530, 500 - i);
 	}
+}
+/**
+ * show_gamer - function to show the gamer's position
+ * @init: sdl2 instance
+ * Return: no return
+ */
+void show_gamer(SDL_t init)
+{
+	SDL_Rect rec;
+	float x, y, x1, y1;
+
+	rec.x = gamer.x * SCALE;
+	rec.y = gamer.y * SCALE;
+	rec.w = gamer.w * SCALE;
+	rec.h = gamer.h * SCALE;
+
+	SDL_SetRenderDrawColor(init.rend, 101, 67, 33, 255);
+	SDL_RenderFillRect(init.rend, &rec);
+
+	x = gamer.x * SCALE;
+	y = gamer.y * SCALE;
+	x1 = (gamer.x + gamer.dx * 20) * SCALE;
+	y1 = (gamer.y + gamer.dy * 20) * SCALE;
+	SDL_RenderDrawLine(init.rend, x, y, x1, y1);
 }

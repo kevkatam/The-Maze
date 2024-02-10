@@ -41,6 +41,7 @@ void present(SDL_t init)
 {
 	raycast(init);
 	drawmap(init);
+	show_gamer(init);
 }
 /**
  * launch - function to launch the game
@@ -48,10 +49,10 @@ void present(SDL_t init)
  */
 void launch(void)
 {
-	gamer.x = 150;
-	gamer.y = 400;
-	gamer.w = 12;
-	gamer.h = 15;
+	gamer.x = ScreenWidth / 2;
+	gamer.y = ScreenWidth / 2;
+	gamer.w = 1;
+	gamer.h = 25;
 	gamer.a = PI2;
 	gamer.dx = cos(gamer.a) * 5;
 	gamer.dy = sin(gamer.a) * 5;

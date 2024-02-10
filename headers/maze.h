@@ -1,16 +1,16 @@
 #ifndef MAZE_H
 #define MAZE_H
 
-#define ScreenWidth 1366 
+#define ScreenWidth 1280 
 #define ScreenHeight 768 
 #define map_w 10
 #define map_h 10
 #define map_size 100
-#define SCALE 0.15
+#define SCALE 0.25
 #define PI1 (0.5 * M_PI)
 #define PI2 (1.5 * M_PI)
 #define RAD 0.0174533
-#define numrays 60
+#define numrays 60 
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -74,6 +74,7 @@ typedef struct event_keys
 int init_window(SDL_t *init);
 float fix_angle(float angle);
 void launch(void);
+void show_gamer(SDL_t init);
 int getmap(int w, int h, int mt);
 void setmap(int w, int h, int value);
 void makemap(char **argv);
@@ -99,6 +100,7 @@ void keydown(SDL_Event evn);
 void control_door(void);
 void control_keydown(SDL_t init);
 int control_events(SDL_t init);
+float gettexture(int idx);
 
 
 
