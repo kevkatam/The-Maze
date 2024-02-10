@@ -68,13 +68,13 @@ void draw_sc(SDL_t init, int rn, float wh, float ra, float sh, float rx,
 		idx = (int)(tx_y) * 32 + (int)tx_x;
 		c = (gettexture(idx) * 255) *sh; 
 		if (mtxr == 0)
-			SDL_SetRenderDrawColor(init.rend, c / 2.0, c / 2.0, c, 255);
+			SDL_SetRenderDrawColor(init.rend, c / 4.0, c / 4.0, c, 255);
 		else if (mtxr == 1)
-			SDL_SetRenderDrawColor(init.rend, c / 2.0, c, c, 255);
+			SDL_SetRenderDrawColor(init.rend, c / 4.0, c, c, 255);
 		else if (mtxr == 2)
-			SDL_SetRenderDrawColor(init.rend, c, c / 2.0, c / 2.0, 255);
+			SDL_SetRenderDrawColor(init.rend, c, c / 4.0, c / 4.0, 255);
 		else if (mtxr == 3)
-			SDL_SetRenderDrawColor(init.rend, c / 2.0, c, c / 2.0, 255);
+			SDL_SetRenderDrawColor(init.rend, c / 4.0, c, c / 4.0, 255);
 		for (j = rn * s; j < (rn * s) + s; j++)
 			SDL_RenderDrawPoint(init.rend, j, i + of);
 		tx_y += tx_s;
@@ -104,7 +104,7 @@ void drawfloor(SDL_t init,float li_of, int indx, float li, float ra)
 		idx = ((int)(tx_y) & 31) * 32 + ((int)(tx_x) & 31);
 		c = (gettexture(idx) * 255) * 0.7;
 
-		SDL_SetRenderDrawColor(init.rend, c / 1.5, c / 1.5, c / 1.5, 0);
+		SDL_SetRenderDrawColor(init.rend, c / 2.0, c / 2.0, c / 2.0, 255);
 		for (j = indx * s; j < (indx * s) + s; j++)
 			SDL_RenderDrawPoint(init.rend, j, i);
 	}

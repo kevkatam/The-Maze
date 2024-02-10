@@ -10,7 +10,7 @@
 #define PI1 (0.5 * M_PI)
 #define PI2 (1.5 * M_PI)
 #define RAD 0.0174533
-#define numrays 60 
+#define numrays 100 
 
 #include <stdio.h>
 #include <stdlib.h>
