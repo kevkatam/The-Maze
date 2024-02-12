@@ -10,7 +10,10 @@
 #define PI1 (0.5 * M_PI)
 #define PI2 (1.5 * M_PI)
 #define RAD 0.0174533
-#define numrays 100 
+#define WeaponScale 0.4
+#define NumEnemy 2
+#define numrays 100
+#define FOV (M_PI / 3)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -54,6 +57,22 @@ typedef struct gamer
 } gamer_t;
 
 extern gamer_t gamer;
+/**
+ * struct - enemis - structure for enemies
+ * @x: x coordinate of the enemy, horizontal position
+ * @y: y coordinate of the enemy, vertical location
+ * @z: z coordinate of the enemy
+ * @p: path to the enemy image
+ */
+typedef struct enemies
+{
+	float x, y, z;
+	char *p;
+} enemy_t;
+extern enemy_t enemy;
+extern float buf[numrays];
+
+
 /**
  * struct event_keys - structure for event keys
  * @w: up key
@@ -101,6 +120,9 @@ void control_door(void);
 void control_keydown(SDL_t init);
 int control_events(SDL_t init);
 float gettexture(int idx);
+void drawweapon(SDL_t init);
+void drawenemy(SDL_t init);
+float fdv(void);
 
 
 
