@@ -23,7 +23,7 @@ void keyup(SDL_Event evn)
 }
 /**
  * keydown - function that handles the key down event
- * evn: given event
+ * @evn: given event
  * Return: no return
  */
 void keydown(SDL_Event evn)
@@ -58,7 +58,7 @@ void control_door(void)
 		setmap(px_of, py_of, 0);
 }
 /**
- * control_key_down - function that controls when key is pressed down
+ * control_keydown - function that controls when key is pressed down
  * @init: SDL2 instance
  * Return: no return
  */

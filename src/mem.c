@@ -36,7 +36,7 @@ void freecols(char ***cols)
 }
 /**
  * freemap - free memory allocated for map
- * map: given map
+ * @map: given map
  * Return: nothing
  */
 void freemap(int **map)

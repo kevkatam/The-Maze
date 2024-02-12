@@ -66,7 +66,7 @@ void draw_sc(SDL_t init, int rn, float wh, float ra, float sh, float rx,
 	for (i = 0; i < li; i++)
 	{
 		idx = (int)(tx_y) * 32 + (int)tx_x;
-		c = (gettexture(idx) * 255) *sh; 
+		c = (gettexture(idx) * 255) * sh;
 		if (mtxr == 0)
 			SDL_SetRenderDrawColor(init.rend, c / 4.0, c / 4.0, c, 255);
 		else if (mtxr == 1)
@@ -80,6 +80,7 @@ void draw_sc(SDL_t init, int rn, float wh, float ra, float sh, float rx,
 		tx_y += tx_s;
 	}
 	drawfloor(init, of, rn, li, ra);
+	drawceiling(init, of, rn, li, ra);
 }
 /**
  * drawfloor - function that draws the floor
@@ -88,9 +89,9 @@ void draw_sc(SDL_t init, int rn, float wh, float ra, float sh, float rx,
  * @ra: ray angle
  * @indx: ray index
  * @init: sdl2 instance
- * @return: no return
+ * Return: no return
  */
-void drawfloor(SDL_t init,float li_of, int indx, float li, float ra)
+void drawfloor(SDL_t init, float li_of, int indx, float li, float ra)
 {
 	int i, j, s = (int) ScreenWidth / 75, idx;
 	float dy, fx, pa = gamer.a, tx_x, tx_y, c;
@@ -123,9 +124,9 @@ void drawceiling(SDL_t init, float li_of, int indx, float li, float ra)
 	int i, j;
 	float dy, fx, ga = gamer.a, tx_x, tx_y, c, idx;
 
-	for (i = li_of + li; i < 500; i++)
+	for (i = li_of + li; i < li_of; i++)
 	{
-		dy = i - (500 / 2.0);
+		dy = (500 / 2.0);
 		fx = cos(fix_angle(ga - ra));
 		tx_x = gamer.x / 2.0 + cos(ra) * 158 * 32 / dy / fx;
 		tx_y = gamer.y / 2.0 - sin(ra) * 158 * 32 / dy / fx;
@@ -133,7 +134,7 @@ void drawceiling(SDL_t init, float li_of, int indx, float li, float ra)
 		c = (gettexture(idx) * 255) * 0.7;
 		SDL_SetRenderDrawColor(init.rend, c / 2.0, c / 1.2, c / 2.0, 0);
 		for (j = indx * 10; j < (indx * 10) + 10; j++)
-			SDL_RenderDrawPoint(init.rend, j + 530, 500 - i);
+			SDL_RenderDrawPoint(init.rend, j, 500 - i);
 	}
 }
 /**
