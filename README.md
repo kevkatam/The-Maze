@@ -33,7 +33,7 @@ sudo apt install libsdl2-image-dev
 ## Compliation
 
 ```bash
-gcc -Wall -Werror -Wextra -pedantic ./src/*.c -lm $(sdl2-config --cflags --libs) -lSDL_image -o maze
+gcc -Wall -Werror -Wextra -pedantic ./src/*.c -lm $(sdl2-config --cflags --libs) -lSDL2_image -o maze
 ```
 
 ## Run

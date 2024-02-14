@@ -9,7 +9,7 @@ void drawweapon(SDL_t init)
 	SDL_Texture *tx = NULL;
 	SDL_Rect shooter;
 	int w, h;
-	SDL_Surface *s = IMG_Load("../images/weapon.png");
+	SDL_Surface *s = IMG_Load("images/weapon.png");
 
 	if (s)
 	{
@@ -33,7 +33,7 @@ void drawweapon(SDL_t init)
 		printf("failed to create surface\n");
 }
 enemy_t enemies[NumEnemy] = {
-	{750, 360, 5, "../images/enemy.png"},
+	{750, 360, 5, "images/enemy.png"},
 };
 
 /**
