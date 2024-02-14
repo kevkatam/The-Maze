@@ -48,7 +48,7 @@ void drawenemy(SDL_t init)
 	int w, h, i;
 	float dx, dy, ds, sx, DOF, ea, ed, es, ex;
 
-	for (i = 0; i < 2; i++)
+	for (i = 0; i < NumEnemy; i++)
 	{
 		SDL_Surface *s = IMG_Load(enemies[i].p);
 
