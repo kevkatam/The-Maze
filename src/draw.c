@@ -68,13 +68,13 @@ void draw_sc(SDL_t init, int rn, float wh, float ra, float sh, float rx,
 		idx = (int)(tx_y) * 32 + (int)tx_x;
 		c = (gettexture(idx) * 255) * sh;
 		if (mtxr == 0)
-			SDL_SetRenderDrawColor(init.rend, c / 4.0, c / 4.0, c, 255);
+			SDL_SetRenderDrawColor(init.rend, c / 4.0, c / 4.0, c, 0);
 		else if (mtxr == 1)
-			SDL_SetRenderDrawColor(init.rend, c / 4.0, c, c, 255);
+			SDL_SetRenderDrawColor(init.rend, c / 4.0, c, c, 0);
 		else if (mtxr == 2)
-			SDL_SetRenderDrawColor(init.rend, c, c / 4.0, c / 4.0, 255);
+			SDL_SetRenderDrawColor(init.rend, c, c / 4.0, c / 4.0, 0);
 		else if (mtxr == 3)
-			SDL_SetRenderDrawColor(init.rend, c / 4.0, c, c / 4.0, 255);
+			SDL_SetRenderDrawColor(init.rend, c / 4.0, c, c / 4.0, 0);
 		for (j = rn * s; j < (rn * s) + s; j++)
 			SDL_RenderDrawPoint(init.rend, j, i + of);
 		tx_y += tx_s;

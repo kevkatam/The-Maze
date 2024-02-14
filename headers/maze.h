@@ -11,7 +11,7 @@
 #define PI2 (1.5 * M_PI)
 #define RAD 0.0174533
 #define WeaponScale 0.4
-#define NumEnemy 2
+#define NumEnemy 1 
 #define numrays 100
 #define FOV (M_PI / 3)
 
@@ -123,6 +123,7 @@ float gettexture(int idx);
 void drawweapon(SDL_t init);
 void drawenemy(SDL_t init);
 float fdv(void);
+void enemymap(SDL_t init);
 
 
 

@@ -44,6 +44,7 @@ void present(SDL_t init)
 	show_gamer(init);
 	drawweapon(init);
 	drawenemy(init);
+	enemymap(init);
 }
 /**
  * launch - function to launch the game

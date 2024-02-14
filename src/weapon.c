@@ -32,9 +32,8 @@ void drawweapon(SDL_t init)
 	else
 		printf("failed to create surface\n");
 }
-enemy_t enemies[2] = {
-	{429.5, 385, 5, "../images/enemy.png"},
-	{79.8, 446.2, 5, "../images/enemy2.png"},
+enemy_t enemies[NumEnemy] = {
+	{750, 360, 5, "../images/enemy.png"},
 };
 
 /**
@@ -60,7 +59,7 @@ void drawenemy(SDL_t init)
 			SDL_QueryTexture(tx, NULL, NULL, &w, &h);
 
 			dx = enemies[i].x - gamer.x;
-			dy = enemies[i].x - gamer.y;
+			dy = enemies[i].y - gamer.y;
 			ds = sqrt(dx * dx + dy * dy);
 
 			ea = atan2(dy, dx) - gamer.a;
@@ -73,9 +72,9 @@ void drawenemy(SDL_t init)
 			enm.x = (ScreenWidth / 2) + sx - (es / 2);
 			ex = ed / 4;
 			enm.y = (ScreenHeight - es) / 2.0f;
-			enm.w = es;
-			enm.h = es;
-			if (tx && ex > 0 && ex < 2 && enm.y < buf[(int)ex])
+			enm.w = es - 200;
+			enm.h = es - 20;
+			if (tx && ex > 0 && ex < numrays && enm.y < buf[(int)ex])
 				SDL_RenderCopy(init.rend, tx, NULL, &enm);
 		}
 		else
@@ -93,4 +92,28 @@ float fdv(void)
 	float s = ScreenWidth / 2, a = FOV / 2;
 
 	return (s / tan(a));
+}
+/**
+ * enemymap - function that draws the enemy map
+ * @init: sdl2 instance
+ * Return: no return
+ */
+void enemymap(SDL_t init)
+{
+	SDL_Rect rec;
+	float ex, ey;
+	int i;
+
+	for (i = 0; i < NumEnemy; i++)
+	{
+		ex = enemies[i].x * SCALE;
+		ey = enemies[i].y * SCALE;
+		rec.x = ex - 2;
+		rec.y = ey - 2;
+		rec.w = 5;
+		rec.h = 5;
+
+		SDL_SetRenderDrawColor(init.rend, 0, 255, 255, 0);
+		SDL_RenderFillRect(init.rend, &rec);
+	}
 }
