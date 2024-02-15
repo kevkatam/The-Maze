@@ -47,7 +47,7 @@ gcc -Wall -Werror -Wextra -pedantic ./src/*.c -lm $(sdl2-config --cflags --libs)
 For a detailed flowchart of the game logic and architecture,please see the [Flowchart](https://drive.google.com/file/d/1SLSFGgfL5cN5p9JzPTIGMhTad82aFTPI/view?usp=sharing)
 
 ## Project Demo
-To view the 3D Maze demo, please visit [3D Maze Demo]()
+To view the 3D Maze demo, please visit [3D Maze Demo](https://youtu.be/Qa1AlJfw2hg)
 
 ## Author
 
