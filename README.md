@@ -10,7 +10,7 @@ Simple DirectMedia Layer is a cross-platform development library designed to pro
 
 ## Requirements to Play
 
-- Mac OS
+- Mac OS or Linux
 - SDL2 and sdl_image
 
 ## Installations
