@@ -8,6 +8,7 @@ void freetoks(char **toks)
 {
 	char **temp = toks;
 
+	/** frees each token **/
 	if (toks)
 	{
 		while (*toks)
@@ -26,6 +27,7 @@ void freecols(char ***cols)
 	int i, j;
 
 
+	/** frees each column for each row **/
 	for (i = 0; i < map_w; i++)
 	{
 		for (j = 0; j < map_h; j++)
@@ -44,6 +46,7 @@ void freemap(int **map)
 	int i;
 
 
+	/** free each number value in map **/
 	for (i = 0; i < map_w; i++)
 		free(map[i]);
 	free(map);

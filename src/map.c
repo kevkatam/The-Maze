@@ -36,6 +36,7 @@ int floor_map[map_h][map_w] = {
  */
 int getmap(int w, int h, int mt)
 {
+	/** if floor map is needed **/
 	if (mt == 1)
 		return (floor_map[h][w]);
 	return (map[h][w]);
@@ -49,8 +50,11 @@ int getmap(int w, int h, int mt)
  */
 void setmap(int w, int h, int value)
 {
+	/** sets the map value to argument value **/
 	map[h][w] = value;
 }
+
+
 /**
  * makemap - makes map from given file
  * @argv: command line argument array
@@ -61,13 +65,16 @@ void makemap(char **argv)
 	int i, j;
 	int **filemap;
 
+	/** gets map value from a file **/
 	filemap = getaltitude(argv);
 
+	/** updates the value with one parsed from the file **/
 	for (i = 0; i < map_w; i++)
 	{
 		for (j = 0; j < map_h; j++)
 			map[i][j] = filemap[i][j];
 	}
+	/** frees the map **/
 	freemap(filemap);
 }
 /**
@@ -82,34 +89,41 @@ int **getaltitude(char **argv)
 	char buff[1024];
 	char **rows, ***cols;
 
-
+	/** opens a file **/
 	fd = open(argv[1], O_RDWR);
 	if (fd == -1)
 	{
 		fprintf(stderr, "Error opening a file");
 		return (NULL);
 	}
+	/** reads the file **/
 	read(fd, buff, 1023);
 	close(fd);
 
+	/** allocates map memory **/
 	alt = malloc(sizeof(int *) * map_w);
 	if (alt == NULL)
 		return (NULL);
 	for (i = 0; i < map_w; i++)
 		alt[i] = malloc(sizeof(int) * map_h);
 
+	/** splits the file per line **/
 	rows = strsplit(buff, "\n");
 
+	/** allocate row memory **/
 	cols = malloc(sizeof(char **) * map_w);
 
+	/** splits row per space **/
 	for (i = 0; rows[i]; i++)
 		cols[i] = strsplit(rows[i], " ");
 
+	/** converts character to int **/
 	for (i = 0; i < map_w; i++)
 	{
 		for (j = 0; j < map_h; j++)
 			alt[i][j] = atoi(cols[i][j]);
 	}
+	/** frees map and row memories **/
 	freetoks(rows);
 	freecols(cols);
 	return (alt);
@@ -127,12 +141,16 @@ char **strsplit(char *str, char *d)
 	int i = 0;
 	int toks_size = 2;
 
+	/** allocates token memory **/
 	toks = malloc(sizeof(char *) * (toks_size + 1));
 	if (!toks)
 		return (NULL);
+	/** duplicates string **/
 	s2 = strdup(str);
+	/** splits string based on a delimeter d **/
 	tok = strtok(s2, d);
 	toks_size++;
+	/** while loop upto the string's end **/
 	while (tok)
 	{
 		toks[i] = strdup(tok);
@@ -141,7 +159,8 @@ char **strsplit(char *str, char *d)
 		i++;
 		toks_size++;
 	}
-	toks[i] = "";
+	/** adds string's terminate character **/
+	toks[i] = '\0';
 	if (tok)
 		free(tok);
 	if (s2)

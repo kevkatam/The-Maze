@@ -6,6 +6,7 @@
  */
 void drawmap(SDL_t init)
 {
+	/** x and y coordinates varaibles **/
 	int i, j;
 	SDL_Rect rec;
 
@@ -13,12 +14,14 @@ void drawmap(SDL_t init)
 	{
 		for (j = 0; j < map_h; j++)
 		{
+			/** sets the wall color to dark grey and black **/
 			if (getmap(j, i, 0) > 0)
 				SDL_SetRenderDrawColor(init.rend,
 						28, 28, 28, 0);
 			else
 				SDL_SetRenderDrawColor(init.rend,
 						255, 255, 255, 0);
+			/** draws the map **/
 			rec.x = (j * map_size * SCALE) + 1;
 			rec.y = (i * map_size * SCALE) + 1;
 			rec.w = (map_size * SCALE) - 1;
@@ -42,14 +45,17 @@ void drawmap(SDL_t init)
 void draw_sc(SDL_t init, int rn, float wh, float ra, float sh, float rx,
 		float ry, int mtxr)
 {
+	/** variables to draw the wall **/
 	float li, a = fix_angle(gamer.a - ra), of, tx_y = 0, tx_x, tx_s, c;
 	int i, j, s = (int) ScreenWidth / 75, idx;
 
 	wh = wh * cos(a), li = (map_size * 670) / wh, tx_s = 32.0 / (float)li;
+	/** offset of line and its limit **/
 	of = 280 - (li / 2);
 	if (li > 670)
 		li = 670, tx_y = (li - 670) / 2.0;
 	tx_y = (tx_y * tx_s) + (mtxr * 32);
+	/** wall shade if sh is 1 **/
 	if (sh == 1)
 	{
 		tx_x = (int) (rx / 2.0) % 32;
@@ -62,7 +68,7 @@ void draw_sc(SDL_t init, int rn, float wh, float ra, float sh, float rx,
 		if (ra > PI1 && ra < PI2)
 			tx_x = 31 - tx_x;
 	}
-
+	/** draws the wall using the above features **/
 	for (i = 0; i < li; i++)
 	{
 		idx = (int)(tx_y) * 32 + (int)tx_x;
@@ -93,9 +99,11 @@ void draw_sc(SDL_t init, int rn, float wh, float ra, float sh, float rx,
  */
 void drawfloor(SDL_t init, float li_of, int indx, float li, float ra)
 {
+	/** floor varibles **/
 	int i, j, s = (int) ScreenWidth / 75, idx;
 	float dy, fx, pa = gamer.a, tx_x, tx_y, c;
 
+	/** draw the floor from where the walls stop **/
 	for (i = li_of + li; i < ScreenHeight; i++)
 	{
 		dy = i - (520 / 2.0), fx = cos(fix_angle(pa - ra));
@@ -121,9 +129,11 @@ void drawfloor(SDL_t init, float li_of, int indx, float li, float ra)
  */
 void drawceiling(SDL_t init, float li_of, int indx, float li, float ra)
 {
+	/** ceiling variables **/
 	int i, j;
 	float dy, fx, ga = gamer.a, tx_x, tx_y, c, idx;
 
+	/** draw the ceiling from the beginning of the walls **/
 	for (i = li_of + li; i < li_of; i++)
 	{
 		dy = (500 / 2.0);
@@ -144,17 +154,21 @@ void drawceiling(SDL_t init, float li_of, int indx, float li, float ra)
  */
 void show_gamer(SDL_t init)
 {
+	/** SDL_Rect instance and initial and final coordinates varaibles **/
 	SDL_Rect rec;
 	float x, y, x1, y1;
 
+	/** change gamer pos to scale of the map **/
 	rec.x = gamer.x * SCALE;
 	rec.y = gamer.y * SCALE;
 	rec.w = gamer.w * SCALE;
 	rec.h = gamer.h * SCALE;
 
+	/** draws the gamer's rectangle **/
 	SDL_SetRenderDrawColor(init.rend, 101, 67, 33, 255);
 	SDL_RenderFillRect(init.rend, &rec);
 
+	/** draws line of the player **/
 	x = gamer.x * SCALE;
 	y = gamer.y * SCALE;
 	x1 = (gamer.x + gamer.dx * 20) * SCALE;

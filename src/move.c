@@ -8,16 +8,22 @@ gamer_t gamer;
  */
 void keyup(SDL_Event evn)
 {
+	/** when left arrow key or A is pressed **/
 	if (evn.key.keysym.sym == SDLK_LEFT || evn.key.keysym.sym == SDLK_a)
 		key.a = 0;
+	/** when right or D is pressed **/
 	if (evn.key.keysym.sym == SDLK_RIGHT || evn.key.keysym.sym == SDLK_d)
 		key.d = 0;
+	/** when up or W key is pressed **/
 	if (evn.key.keysym.sym == SDLK_UP || evn.key.keysym.sym == SDLK_w)
 		key.w = 0;
+	/** when down or S key is pressed **/
 	if (evn.key.keysym.sym == SDLK_DOWN || evn.key.keysym.sym == SDLK_s)
 		key.s = 0;
+	/** when E key is pressed **/
 	if (evn.key.keysym.sym == SDLK_e)
 		key.e = 0;
+	/** when escape or X key is pressed **/
 	if (evn.key.keysym.sym == SDLK_ESCAPE)
 		key.x = 0;
 }
@@ -28,16 +34,22 @@ void keyup(SDL_Event evn)
  */
 void keydown(SDL_Event evn)
 {
+	/** when up arrow key or W is pressed **/
 	if (evn.key.keysym.sym == SDLK_UP || evn.key.keysym.sym == SDLK_w)
 		key.w = 1;
+	/** when left arrow key or A is pressed **/
 	if (evn.key.keysym.sym == SDLK_LEFT || evn.key.keysym.sym == SDLK_a)
 		key.a = 1;
+	/** when down or S key is pressed **/
 	if (evn.key.keysym.sym == SDLK_DOWN || evn.key.keysym.sym == SDLK_s)
 		key.s = 1;
+	/** when right or D is pressed **/
 	if (evn.key.keysym.sym == SDLK_RIGHT || evn.key.keysym.sym == SDLK_d)
 		key.d = 1;
+	/** when E key is pressed **/
 	if (evn.key.keysym.sym == SDLK_e)
 		key.e = 1;
+	/** when escape or X key is pressed **/
 	if (evn.key.keysym.sym == SDLK_ESCAPE)
 		key.x = 1;
 }
@@ -54,6 +66,7 @@ void control_door(void)
 	px_of = (gamer.x + x) / map_size;
 	py_of = (gamer.y + y) / map_size;
 
+	/** if the player is near the door **/
 	if (getmap(px_of, py_of, 0) == 4)
 		setmap(px_of, py_of, 0);
 }
@@ -67,17 +80,21 @@ void control_keydown(SDL_t init)
 	int ix, iy, gx = gamer.x / map_size, gy = gamer.y / map_size, x = 0,
 	    y = 0;
 
+
 	x = (gamer.dx < 0) ? -20 : 20, y = (gamer.dy < 0) ? -20 : 20;
+	/** when A is pressed **/
 	if (key.a == 1)
 	{
 		gamer.a -= 0.1, gamer.a = fix_angle(gamer.a);
 		gamer.dx = cos(gamer.a) * 5, gamer.dy = sin(gamer.a) * 5;
 	}
+	/** when D is pressed **/
 	else if (key.d == 1)
 	{
 		gamer.a += 0.1, gamer.a = fix_angle(gamer.a);
 		gamer.dx = cos(gamer.a) * 5, gamer.dy = sin(gamer.a) * 5;
 	}
+	/** when W is pressed **/
 	else if (key.w == 1)
 	{
 		ix = ((gamer.dx * 5) + gamer.x + x) / map_size;
@@ -87,6 +104,7 @@ void control_keydown(SDL_t init)
 		if (getmap(gx, iy, 0) == 0)
 			gamer.y += gamer.dy * 2;
 	}
+	/** when S is pressed **/
 	else if (key.s == 1)
 	{
 		ix = ((gamer.x - (gamer.dx * 5)) - x) / map_size;
@@ -98,7 +116,8 @@ void control_keydown(SDL_t init)
 	}
 	else if (key.e == 1)
 		control_door();
-	SDL_SetRenderDrawColor(init.rend, 76, 76, 76, 0);
+	/** set drawing colors and draw **/
+	SDL_SetRenderDrawColor(init.rend, 80, 80, 80, 0);
 	SDL_RenderClear(init.rend);
 	present(init);
 	SDL_RenderPresent(init.rend);
@@ -111,20 +130,26 @@ void control_keydown(SDL_t init)
  */
 int control_events(SDL_t init)
 {
+	/** SDL_Event instance **/
 	SDL_Event evn;
 
+	/** while the escape and quit (X) keys are not pressed **/
 	while (SDL_PollEvent(&evn))
 	{
+		/** when quit is pressed **/
 		if (evn.type == SDL_QUIT)
 			return (1);
+		/** when down key is pressed **/
 		else if (evn.type == SDL_KEYDOWN)
 		{
 			keydown(evn);
 			if (key.x == 1)
 				return (1);
 		}
+		/** when up arrow is pressed **/
 		else if (evn.type == SDL_KEYUP)
 			keyup(evn);
+		/** call control_keydown to control key dowa operations **/
 		control_keydown(init);
 	}
 	return (0);

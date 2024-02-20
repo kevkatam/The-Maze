@@ -9,13 +9,16 @@ int hitwall(float r_x, float r_y)
 {
 	int mx, my, mp;
 
+	/** if the ray is beyond boundary **/
 	if (r_x < 0 || r_x >= map_w * map_size || r_y < 0 ||
 			r_y >= map_h * map_size)
 		return (1);
+	/** approximate to the nearest int **/
 	mx = floor(r_x / map_size);
 	my = floor(r_y / map_size);
 	mp = my * map_w + mx;
 
+	/** if the ray hits the wall **/
 	if (mp > 0 && mp < map_w * map_h && getmap(mx, my, 0) > 0)
 		return (getmap(mx, my, 0));
 	else
@@ -49,29 +52,36 @@ float find_d(float ix, float iy, float jx, float jy)
 void horizontal_clash(float ra, float *h_d, float *h_x, float *h_y,
 		int *h_mtx)
 {
+	/** ray variables **/
 	float rx, ry, xo, yo, tann;
 	int dif, val;
 
 	tann = -1 / tan(ra);
 	dif = 0;
 
+	/** ray looking up **/
 	if (ra > M_PI)
 	{
 		ry = (((int)gamer.y >> 6) << 6) - 0.0001;
 		rx = ((gamer.y - ry) * tann) + gamer.x;
 		yo = -100, xo = -yo * tann;
 	}
+	/** ray looking down **/
 	else if (ra < M_PI && ra > 0)
 	{
 		ry = (((int)gamer.y >> 6) << 6) + 100;
 		rx = ((gamer.y - ry) * tann) + gamer.x;
 		yo = 100, xo = -yo * tann;
 	}
+	/** ray looking parallel **/
 	else if (ra == 0 || ra == M_PI)
 		rx = gamer.x, ry = gamer.y, dif = 10;
+	/** while the ray doest hint the wall **/
 	while (dif < 10)
 	{
+		/** call hitwall function **/
 		val = hitwall(rx, ry);
+		/** quit the loop if the ray hits the wall **/
 		if (val != 0)
 		{
 			dif = 10;
@@ -83,6 +93,8 @@ void horizontal_clash(float ra, float *h_d, float *h_x, float *h_y,
 	}
 	*h_x = rx;
 	*h_y = ry;
+	/** call find_d to find distance the player and the ray hits 
+	  the wall  **/
 	*h_d = find_d(gamer.x, gamer.y, rx, ry);
 }
 /**
@@ -96,31 +108,37 @@ void horizontal_clash(float ra, float *h_d, float *h_x, float *h_y,
  */
 void vertical_clash(float ra, float *v_d, float *v_x, float *v_y, int *v_mtx)
 {
+	/** variables for vertical ray clash detection **/
 	float rx, ry, xo, yo, tann;
 	int dif, val;
 
 	tann = -tan(ra);
 	dif = 0;
 
+	/** looking to the left **/
 	if (ra > PI1 && ra < PI2)
 	{
 		rx = (((int)gamer.x >> 6) << 6) - 0.0001;
 		ry = ((gamer.x - rx) * tann) + gamer.y;
 		xo = -100, yo = -xo * tann;
 	}
+	/** lookinf to the right **/
 	else if ((ra < PI1 || ra > PI2) && ra)
 	{
 		rx = (((int)gamer.x >> 6) << 6) + 100;
 		ry = ((gamer.x - rx) * tann) + gamer.y;
 		xo = 100, yo = -xo * tann;
 	}
+	/** ray parallel to the vertical line **/
 	else if (ra == 0 || ra == M_PI)
 	{
 		rx = gamer.x, ry = gamer.y, dif = 10;
 	}
+	/** while the ray doesn't hit the wall **/
 	while (dif < 10)
 	{
 		val = hitwall(rx, ry);
+		/** if the ray hits the wall quit the loop **/
 		if (val != 0)
 		{
 			dif = 10;
@@ -132,6 +150,7 @@ void vertical_clash(float ra, float *v_d, float *v_x, float *v_y, int *v_mtx)
 	}
 	*v_x = rx;
 	*v_y = ry;
+	/** call find_d to find distance the player and ray hits verical line **/
 	*v_d = find_d(gamer.x, gamer.y, rx, ry);
 }
 gamer_t gamer;
@@ -143,6 +162,7 @@ float buf[numrays];
  */
 void raycast(SDL_t init)
 {
+	/** variables for ray, horizontal and vertical distances **/
 	float ra, hx, hy, hd = 1000000, sh = 1, px, py, rx, ry;
 	float vx, vy, vd = 1000000, dis, r_x, r_y;
 	int i, vtx = 0, htx = 0;
@@ -160,9 +180,12 @@ void raycast(SDL_t init)
 	ra = gamer.a - RAD * 30, ra = fix_angle(ra);
 	for (i = 0; i < numrays; i++)
 	{
+		/** get horizontal line coordinates **/
 		horizontal_clash(ra, &hd, &hx, &hy, &htx);
+		/** get vertical line coordinates **/
 		vertical_clash(ra, &vd, &vx, &vy, &vtx);
 
+		/** check shortest distance **/
 		if (hd < vd)
 			r_x = hx, r_y = hy, dis = hd, sh = 1, buf[i] = hd;
 		else
@@ -174,6 +197,7 @@ void raycast(SDL_t init)
 		px = gamer.x * SCALE, py = gamer.y * SCALE;
 		rx = r_x * SCALE, ry = r_y * SCALE;
 		SDL_RenderDrawLine(init.rend, px, py, rx, ry);
+		/** draw the walls **/
 		draw_sc(init, i, dis, ra, sh, r_x, r_y, htx);
 		ra += RAD, ra = fix_angle(ra);
 	}
